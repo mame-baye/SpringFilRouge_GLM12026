@@ -1,6 +1,8 @@
 package com.groupeisi.HelloSpring.init;
 
+import com.groupeisi.HelloSpring.entities.Entreprise;
 import com.groupeisi.HelloSpring.entities.Etudiant;
+import com.groupeisi.HelloSpring.repositories.EntrepriseRepository;
 import com.groupeisi.HelloSpring.repositories.EtudiantRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,6 +21,7 @@ public class Demarrage implements CommandLineRunner {
 
 
     private final EtudiantRepository etudiantRepository;
+    private final EntrepriseRepository entrepriseRepository;
 
 
     // 100 prénoms africains : 80 sénégalais + 20 autres africains
@@ -101,7 +104,27 @@ public class Demarrage implements CommandLineRunner {
             log.info("il ya desja des données en base (pas d'initialisation a faire)");
         }
 
+        long nbEntreprises = entrepriseRepository.count();
+        log.info("il existe {} entreprise(s) en base", nbEntreprises);
 
+        if (nbEntreprises == 0) {
+            log.warn("aucune entreprise en base, initialisation de 5 entreprises");
 
+            Entreprise e1 = new Entreprise("Sonatel", "Télécommunications", "Boulevard de la République, Dakar", "contact@orange-sonatel.sn", "+221338391200");
+            Entreprise e2 = new Entreprise("Wave Digital Finance", "Fintech & Mobile Money", "Almadies, Dakar", "support@wave.com", "+221338000000");
+            Entreprise e3 = new Entreprise("Free Sénégal", "Télécommunications", "Route des Almadies, Dakar", "contact@free.sn", "+221328240000");
+            Entreprise e4 = new Entreprise("Gainde 2000", "Technologies de l'Information", "Point E, Dakar", "info@gainde2000.sn", "+221338593888");
+            Entreprise e5 = new Entreprise("Atos Sénégal", "Services Numériques & IT", "Cité Keur Gorgui, Dakar", "contact@atos.net", "+221338690000");
+
+            entrepriseRepository.save(e1);
+            entrepriseRepository.save(e2);
+            entrepriseRepository.save(e3);
+            entrepriseRepository.save(e4);
+            entrepriseRepository.save(e5);
+
+            log.info("5 entreprises enregistrées avec succès au démarrage");
+        } else {
+            log.info("il y a déjà des entreprises en base (pas d'initialisation à faire)");
+        }
     }
 }

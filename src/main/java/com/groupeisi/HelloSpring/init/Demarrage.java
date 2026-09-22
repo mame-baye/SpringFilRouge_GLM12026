@@ -2,8 +2,10 @@ package com.groupeisi.HelloSpring.init;
 
 import com.groupeisi.HelloSpring.entities.Entreprise;
 import com.groupeisi.HelloSpring.entities.Etudiant;
+import com.groupeisi.HelloSpring.entities.Stage;
 import com.groupeisi.HelloSpring.repositories.EntrepriseRepository;
 import com.groupeisi.HelloSpring.repositories.EtudiantRepository;
+import com.groupeisi.HelloSpring.repositories.StageRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class Demarrage implements CommandLineRunner {
 
     private final EtudiantRepository etudiantRepository;
     private final EntrepriseRepository entrepriseRepository;
+    private final StageRepository stageRepository;
 
 
     // 100 prénoms africains : 80 sénégalais + 20 autres africains
@@ -125,6 +129,25 @@ public class Demarrage implements CommandLineRunner {
             log.info("5 entreprises enregistrées avec succès au démarrage");
         } else {
             log.info("il y a déjà des entreprises en base (pas d'initialisation à faire)");
+        }
+
+        long nbStages = stageRepository.count();
+        log.info("il existe {} stage(s) en base", nbStages);
+
+        if (nbStages == 0) {
+            log.warn("aucun stage en base, initialisation de 3 stages");
+
+            Stage s1 = new Stage("Développement d'une plateforme e-commerce en microservices", LocalDate.of(2026, 4, 1), LocalDate.of(2026, 9, 30), "En cours");
+            Stage s2 = new Stage("Mise en place d'un pipeline CI/CD avec Docker et Kubernetes", LocalDate.of(2026, 5, 1), LocalDate.of(2026, 10, 31), "Validé");
+            Stage s3 = new Stage("Conception d'une application mobile de transfert d'argent", LocalDate.of(2026, 3, 15), LocalDate.of(2026, 8, 15), "Terminé");
+
+            stageRepository.save(s1);
+            stageRepository.save(s2);
+            stageRepository.save(s3);
+
+            log.info("3 stages enregistrés avec succès au démarrage");
+        } else {
+            log.info("il y a déjà des stages en base (pas d'initialisation à faire)");
         }
     }
 }

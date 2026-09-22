@@ -14,25 +14,41 @@ public class EtudiantService {
 
     private final EtudiantRepository etudiantRepository;
 
+    // Lister tous les étudiants
     public List<Etudiant> findAll() {
         return etudiantRepository.findAll();
     }
 
+    // Trouver un étudiant par son numéro de carte
     public Optional<Etudiant> findByNumCarte(String numCarte) {
         return etudiantRepository.findById(numCarte);
     }
 
+    // Créer un nouvel étudiant
     public Etudiant create(Etudiant etudiant) {
-        etudiant=etudiantRepository.save(etudiant);
-        return etudiant;
+        return etudiantRepository.save(etudiant);
     }
 
-    public Etudiant update(Etudiant etudiant) {
-        etudiant=etudiantRepository.save(etudiant);
-        return etudiant;
+    // Mettre à jour un étudiant existant
+    public Optional<Etudiant> update(String numCarte, Etudiant etudiant) {
+        if (!etudiantRepository.existsById(numCarte)) {
+            return Optional.empty();
+        }
+        etudiant.setNumCarte(numCarte);
+        return Optional.of(etudiantRepository.save(etudiant));
     }
 
-    public void delete(String numCarte) {
-        etudiantRepository.deleteById(numCarte);
+    // Supprimer un étudiant par son numéro de carte
+    public boolean delete(String numCarte) {
+        if (etudiantRepository.existsById(numCarte)) {
+            etudiantRepository.deleteById(numCarte);
+            return true;
+        }
+        return false;
+    }
+
+    // Vérifier l'existence d'un étudiant
+    public boolean existsByNumCarte(String numCarte) {
+        return etudiantRepository.existsById(numCarte);
     }
 }

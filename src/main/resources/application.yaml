@@ -3,9 +3,9 @@ spring:
     name: HelloSpring
 
   datasource:
-    url: jdbc:mysql://localhost:3306/isi_hello_spring
-    username: root
-    password: passer123
+    url: jdbc:mysql://${ISI_DB_HOSTNAME}:${ISI_DB_PORT}/${ISI_DB_NAME}
+    username: ${ISI_DB_USER}
+    password: ${ISI_DB_PWD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

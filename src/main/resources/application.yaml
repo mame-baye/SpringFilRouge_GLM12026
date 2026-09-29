@@ -9,4 +9,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: ${ISI_DDL_AUTO:create}
+
+groupeisi:
+  gl:
+    responsable:
+      prenom: ${RESPONSABLE_PRENOM:claye}
+      nom: ${RESPONSABLE_NOM:Ndiaye}
+      email: ${RESPONSABLE_EMAIL:clayendaye@groupeisi.com}

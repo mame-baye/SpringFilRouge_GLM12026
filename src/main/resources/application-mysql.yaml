@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: HelloSpring
+
+  datasource:
+    url: jdbc:${ISI_DB_drive:mysql}://${ISI_DB_HOSTNAME}:${ISI_DB_PORT:3306}/${ISI_DB_NAME}
+    username: ${ISI_DB_USER:root}
+    password: ${ISI_DB_PWD:passer}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${ISI_DDL_AUTO:create}
+
+  profiles:
+    active: ${profil:mysql}
+groupeisi:
+  gl:
+    responsable:
+      prenom: ${RESPONSABLE_PRENOM:claye}
+      nom: ${RESPONSABLE_NOM:Ndiaye}
+      email: ${RESPONSABLE_EMAIL:clayendaye@groupeisi.com}

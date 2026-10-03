@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: ${ISI_DDL_AUTO:create}
+
+groupeisi:
+  gl:
+    responsable:
+      prenom: ${RESPONSABLE_PRENOM:Mbaye}
+      nom: ${RESPONSABLE_NOM:Ndiaye}
+      email: ${RESPONSABLE_EMAIL:mbayendiaye@groupeisi.com}
